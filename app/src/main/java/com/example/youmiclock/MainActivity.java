@@ -4,22 +4,41 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.youmiclock.tabs.MyFragmentAdapter;
+import com.example.youmiclock.tabs.ClockFragment;
+import com.example.youmiclock.tabs.ThirdFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
+    private String[] tabTitles = new String[]{"闹钟", "秒表"};
 
     private TimeView timeView;
 
     private DrawerLayout drawerLayout;
+
+    private TabLayout tabLayout;
+
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        initTabsFragment();
         timeView = (TimeView)findViewById(R.id.time_view);
     }
 
@@ -93,5 +113,57 @@ public class MainActivity extends AppCompatActivity {
             default:break;
         }
         return true;
+    }
+
+    //
+    private void initTabsFragment(){
+
+        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        viewPager = (ViewPager)findViewById(R.id.view_pager);
+
+        tabLayout.addTab(tabLayout.newTab().setText(tabTitles[0]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabTitles[1]));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d(TAG, "onTabSelected: " + tab.getText());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        List<Fragment> framents = new ArrayList<>();
+        framents.add(new ClockFragment());
+        framents.add(new ThirdFragment());
+
+        MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), framents, tabTitles);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected: " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }
