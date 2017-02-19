@@ -12,12 +12,12 @@ import com.example.youmiclock.R;
 /**
  * Created by hao on 17-2-16.
  */
-public class ThirdFragment extends Fragment {
+public class AlarmClockFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.third_fragment_layout, null);
+        View view = inflater.inflate(R.layout.alarm_fragment_layout, null);
         return view;
     }
 }

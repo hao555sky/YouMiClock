@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.youmiclock.tabs.MyFragmentAdapter;
 import com.example.youmiclock.tabs.ClockFragment;
-import com.example.youmiclock.tabs.ThirdFragment;
+import com.example.youmiclock.tabs.AlarmClockFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Fragment> framents = new ArrayList<>();
         framents.add(new ClockFragment());
-        framents.add(new ThirdFragment());
+        framents.add(new AlarmClockFragment());
 
         MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), framents, tabTitles);
         viewPager.setAdapter(adapter);
