@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AlarmClockView">
-        <attr name="ACVCircile_radius" format="dimension" />
+        <attr name="ACVCircle_radius" format="dimension" />
         <attr name="ACVCircle_color" format="color" />
         <attr name="ACVCircle_change_color" format="color" />
     </declare-styleable>

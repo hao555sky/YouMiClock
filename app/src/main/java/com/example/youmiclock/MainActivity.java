@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private String[] tabTitles = new String[]{"闹钟", "秒表"};
+    private String[] tabTitles = new String[]{"时钟", "闹钟"};
 
     private TimeView timeView;
 

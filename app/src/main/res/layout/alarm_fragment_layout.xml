@@ -10,15 +10,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#FFF">
             <com.example.youmiclock.AlarmClockView
                 android:id="@+id/alarm_clock_view"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                app:ACVCircile_radius="50dp"
-                app:ACVCircle_color="#cfd8dc"
-                android:background="#00FFFFFF"/>
+                app:ACVCircle_radius="100dp"
+                app:ACVCircle_color="#FFD6D6D6"
+                app:ACVCircle_change_color="#26a69a"
+                android:background="#000000"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
