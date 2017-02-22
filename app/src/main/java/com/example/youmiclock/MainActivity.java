@@ -1,5 +1,6 @@
 package com.example.youmiclock;
 
+import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.youmiclock.tabs.MyFragmentAdapter;
@@ -24,13 +26,14 @@ import com.example.youmiclock.tabs.ClockFragment;
 import com.example.youmiclock.tabs.AlarmClockFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private String[] tabTitles = new String[]{"时钟", "闹钟"};
+    private String[] tabTitles = new String[]{"时钟", "秒表"};
 
     private TimeView timeView;
 
@@ -65,28 +68,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // FloatingActionButton
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floating_action_button);
-        //悬浮按钮的监听器
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toast 提示
-                // Toast.makeText(MainActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
-
-                // 可交互提示Snackbar
-                Snackbar.make(v, "Snackbar String", Snackbar.LENGTH_SHORT).setAction("Undo",
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(MainActivity.this, "Undo succeed", Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
-            }
-        });
+//        // FloatingActionButton
+//        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floating_action_button);
+//        //悬浮按钮的监听器
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                addAlarm();
+//                // Toast 提示
+//                // Toast.makeText(MainActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
+//
+//                // 可交互提示Snackbar
+//                Snackbar.make(v, "Snackbar String", Snackbar.LENGTH_SHORT).setAction("Undo",
+//                        new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Toast.makeText(MainActivity.this, "Undo succeed", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }).show();
+//            }
+//        });
 
         initTabsFragment();
         timeView = (TimeView)findViewById(R.id.time_view);
+    }
+
+    private void addAlarm(){
+        final Calendar calendar = Calendar.getInstance();
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+        timePickerDialog.show();
     }
 
     @Override

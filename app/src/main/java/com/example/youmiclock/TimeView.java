@@ -11,8 +11,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.Calendar;
 
@@ -27,6 +29,7 @@ public class TimeView extends View {
     private Context mContext;
 
     private Paint mPaint;
+    private FloatingActionButton floatingAddAlarmButton;
 
     public TimeView(Context context){
         super(context);
@@ -61,6 +64,7 @@ public class TimeView extends View {
         mPaint.setStrokeWidth(0);
 
         handle.sendEmptyMessage(0);
+
     }
 
 

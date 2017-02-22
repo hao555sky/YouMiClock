@@ -109,10 +109,11 @@ public class AlarmClockView extends View {
 
         if(widthMode == MeasureSpec.EXACTLY){
             width = widthSize;
+            circleRadius = getWidth() / 3;
         }else {
             width = widthSize / 2;
-            circleRadius = 80;
-            oval.set(-80, -80, 80, 80);
+            circleRadius = 100;
+            oval.set(-100, -100, 100, 100);
         }
 
         if(heightMode == MeasureSpec.EXACTLY){
