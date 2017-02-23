@@ -1,6 +1,8 @@
 package com.example.youmiclock;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import com.example.youmiclock.tabs.MyFragmentAdapter;
 import com.example.youmiclock.tabs.ClockFragment;
 import com.example.youmiclock.tabs.AlarmClockFragment;
+import com.example.youmiclock.tabs.TimerFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private String[] tabTitles = new String[]{"时钟", "秒表"};
+    private String[] tabTitles = new String[]{"时钟", "闹钟", "计时器"};
 
     private TimeView timeView;
 
@@ -46,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 状态栏融合背景图
+        if(Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -68,44 +80,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        // FloatingActionButton
-//        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.floating_action_button);
-//        //悬浮按钮的监听器
-//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                addAlarm();
-//                // Toast 提示
-//                // Toast.makeText(MainActivity.this, "FAB clicked", Toast.LENGTH_SHORT).show();
-//
-//                // 可交互提示Snackbar
-//                Snackbar.make(v, "Snackbar String", Snackbar.LENGTH_SHORT).setAction("Undo",
-//                        new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Toast.makeText(MainActivity.this, "Undo succeed", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).show();
-//            }
-//        });
-
         initTabsFragment();
         timeView = (TimeView)findViewById(R.id.time_view);
     }
 
-    private void addAlarm(){
-        final Calendar calendar = Calendar.getInstance();
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-        timePickerDialog.show();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText(tabTitles[0]));
         tabLayout.addTab(tabLayout.newTab().setText(tabTitles[1]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabTitles[2]));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -164,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         List<Fragment> framents = new ArrayList<>();
         framents.add(new ClockFragment());
         framents.add(new AlarmClockFragment());
+        framents.add(new TimerFragment());
 
         MyFragmentAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager(), framents, tabTitles);
         viewPager.setAdapter(adapter);

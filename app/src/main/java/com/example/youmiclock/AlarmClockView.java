@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
@@ -38,9 +39,26 @@ public class AlarmClockView extends View {
 
     private RectF oval;
 
+    // 表盘中心X坐标
+    private float centerX;
+
+    // 表盘中心Y坐标
+    private float centerY;
+
+    // 时间画笔
+    private Paint timePaint;
+
+    // 获取时间
+    private Calendar calendar;
+
+    // 表盘显示时间
+    private String displayTime;
+
+    private Rect textBound = new Rect();
+
     public AlarmClockView(Context context) {
         super(context);
-        initPaint();
+        init();
     }
 
     public AlarmClockView(Context context, AttributeSet attrs) {
@@ -54,13 +72,12 @@ public class AlarmClockView extends View {
         }finally {
             typedArray.recycle();
         }
-        initPaint();
+        init();
     }
 
     public AlarmClockView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        initPaint();
+        init();
     }
 
     private Handler handler = new Handler(){
@@ -76,21 +93,33 @@ public class AlarmClockView extends View {
         }
     };
 
-    private void initPaint(){
+    private void init(){
 
         Log.d(TAG, "initCiclePaint: " + circleColor + "*****" + circleRadius);
 
         circlePaint = new Paint();
-        circlePaint.setStrokeWidth(10);
+        circlePaint.setStrokeWidth(14);
         circlePaint.setStyle(Paint.Style.STROKE);
         circlePaint.setColor(circleColor);
 
         radiusPaint = new Paint();
-        radiusPaint.setStrokeWidth(10);
+        radiusPaint.setStrokeWidth(14);
         radiusPaint.setColor(circleChangeColor);
         radiusPaint.setStyle(Paint.Style.STROKE);
 
+        timePaint = new Paint();
+        timePaint.setStrokeWidth(5);
+        timePaint.setAntiAlias(true);
+        timePaint.setStyle(Paint.Style.FILL);
+        timePaint.setColor(Color.WHITE);
+        float densityText = getResources().getDisplayMetrics().scaledDensity;
+        timePaint.setTextSize(60 * densityText);
+        timePaint.getTextBounds("00:00", 0, "00:00".length(), textBound);
+
         oval = new RectF(-circleRadius, -circleRadius, circleRadius,circleRadius);
+
+        centerX = getWidth() / 2;
+        centerY = getHeight() / 2;
 
         handler.sendEmptyMessage(0);
     }
@@ -128,26 +157,43 @@ public class AlarmClockView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.d(TAG, "onDraw: " + hour + ":" + minute + ":" + second);
-        canvas.translate(getWidth()/ 2, getHeight()/ 2);
+
+        canvas.translate(getWidth() / 2, getHeight() / 2);
         canvas.drawCircle(0, 0, circleRadius, circlePaint);
 
         getDegree();
-        // canvas.drawRect(oval, radiusPaint);
         canvas.drawArc(oval, -90, secondDegree, false, radiusPaint);
+
+        setDisplayTime();
+        canvas.drawText(displayTime, centerX - textBound.width() / 2, centerY + textBound.height() / 2, timePaint);
+        Log.d(TAG, "onDraw: " + displayTime + ":" + second);
     }
 
     private void getTime(){
-        Calendar calendar = Calendar.getInstance();
-        hour = calendar.get(Calendar.HOUR);
+        calendar = Calendar.getInstance();
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
         second = calendar.get(Calendar.SECOND);
         millisecond = calendar.get(Calendar.MILLISECOND);
-
     }
+
+    // 获取秒针角度
     private void getDegree(){
         getTime();
         secondDegree = (float)((second * 1000 + millisecond) / (60.0 * 1000) * 360);
+    }
+
+    // 获取表盘展示时间
+    private void setDisplayTime(){
+        displayTime = TimeAddZero(String.valueOf(hour)) + ":" + TimeAddZero(String.valueOf(minute));
+    }
+
+    // 如果时间小于12， 加0
+    private String TimeAddZero(String time){
+        if(time.length() == 1){
+            return "0" + time;
+        }
+        return time;
     }
 
 }

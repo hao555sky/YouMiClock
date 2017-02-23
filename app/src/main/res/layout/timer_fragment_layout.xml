@@ -11,7 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#4FC3F7">
+            android:background="#66BB6A">
             <com.example.youmiclock.AlarmClockView
                 android:id="@+id/alarm_clock_view"
                 android:layout_width="300dp"

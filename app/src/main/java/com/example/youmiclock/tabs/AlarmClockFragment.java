@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.youmiclock.R;
 
@@ -21,34 +22,13 @@ public class AlarmClockFragment extends Fragment {
 
     private FloatingActionButton floatingAddAlarmButton;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarm_fragment_layout, null);
 
-        floatingAddAlarmButton = (FloatingActionButton)view.findViewById(R.id.floating_add_alarm_button);
-        floatingAddAlarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addAlarm();
-            }
-        });
         return view;
     }
 
-    private void addAlarm(){
 
-        final Calendar calendar = Calendar.getInstance();
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-        timePickerDialog.show();
-    }
 }

@@ -29,6 +29,7 @@ public class TimeView extends View {
     private Context mContext;
 
     private Paint mPaint;
+
     private FloatingActionButton floatingAddAlarmButton;
 
     public TimeView(Context context){
