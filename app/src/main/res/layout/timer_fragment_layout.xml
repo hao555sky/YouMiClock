@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#66BB6A">
-            <com.example.youmiclock.AlarmClockView
+            <com.example.youmiclock.view.AlarmClockView
                 android:id="@+id/alarm_clock_view"
                 android:layout_width="300dp"
                 android:layout_height="300dp"

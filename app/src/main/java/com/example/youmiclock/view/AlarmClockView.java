@@ -1,4 +1,4 @@
-package com.example.youmiclock;
+package com.example.youmiclock.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,6 +12,8 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import com.example.youmiclock.R;
 
 import java.util.Calendar;
 

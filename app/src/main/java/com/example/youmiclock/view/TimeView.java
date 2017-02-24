@@ -1,4 +1,4 @@
-package com.example.youmiclock;
+package com.example.youmiclock.view;
 
 /**
  * Created by hao on 17-2-15.

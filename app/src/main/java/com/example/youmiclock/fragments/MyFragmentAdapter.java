@@ -1,4 +1,4 @@
-package com.example.youmiclock.tabs;
+package com.example.youmiclock.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

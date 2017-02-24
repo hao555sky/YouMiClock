@@ -1,4 +1,4 @@
-package com.example.youmiclock.tabs;
+package com.example.youmiclock.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

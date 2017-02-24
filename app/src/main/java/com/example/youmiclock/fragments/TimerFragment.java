@@ -1,4 +1,4 @@
-package com.example.youmiclock.tabs;
+package com.example.youmiclock.fragments;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
