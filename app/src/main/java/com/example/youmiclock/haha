@@ -42,3 +42,34 @@
                         android:layout_height="300dp"
                         android:layout_centerHorizontal="true"
                         android:background="#00FFFFFF"/>
+
+
+
+                        <TextView
+                                    android:id="@+id/repeat_time_only_once"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="只响一次"
+                                    android:layout_margin="10dp"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.01dp"
+                                    android:background="@color/lineOfAlarmRepeatPopup"/>
+                                <TextView
+                                    android:id="@+id/repeat_time_everyday"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="每天"
+                                    android:layout_margin="10dp"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.01dp"
+                                    android:background="@color/lineOfAlarmRepeatPopup"/>
+                                <TextView
+                                    android:id="@+id/repeat_time_Mon_to_Fri"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="周一至周五"
+                                    android:layout_margin="10dp"/>

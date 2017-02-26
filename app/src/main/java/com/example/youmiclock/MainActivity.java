@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.youmiclock.fragments.MyFragmentAdapter;
+import com.example.youmiclock.adapter.MyFragmentAdapter;
 import com.example.youmiclock.fragments.ClockFragment;
 import com.example.youmiclock.fragments.AlarmClockFragment;
 import com.example.youmiclock.fragments.TimerFragment;
