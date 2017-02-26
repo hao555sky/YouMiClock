@@ -3,7 +3,6 @@ package com.example.youmiclock;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,10 +15,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.youmiclock.adapter.TimeRepeatAdapter;
+import com.example.youmiclock.adapter.TimeRepeatAndRingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +34,17 @@ public class AlarmSetActivity extends AppCompatActivity implements View.OnClickL
 
     private Button alarmSetSure;
 
-    // 存放重复时间的选项
-    private List<String> list = new ArrayList<>();
+    // 存放重复时间选项的list
+    private List<String> repeatTimeNameList = new ArrayList<>();
 
+    // 存放铃声或者震动选项的list
+    private List<String> ringList = new ArrayList<>();
+
+    // 判断是否需要初始化重复选项
     private boolean TimeRepeatListInitFlag = false;
+
+    // 判断铃声list是否初始化
+    private boolean ringInitFlat = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +79,10 @@ public class AlarmSetActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.repeat_choose:
                 Toast.makeText(this, "Repeat", Toast.LENGTH_SHORT).show();
-                showPopupWindow();
+                showRepeatTimePopupWindow();
                 break;
             case R.id.ring_choose:
+                showRingPopupWindow();
                 break;
             case R.id.alarm_set_sure:
                 break;
@@ -87,21 +93,12 @@ public class AlarmSetActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void showPopupWindow(){
+    private void showRepeatTimePopupWindow(){
         View contentView = LayoutInflater.from(AlarmSetActivity.this)
-                .inflate(R.layout.time_repeat_popupwindow, null);
+                .inflate(R.layout.popupwindow_time_repeat_and_ring, null);
 
         popupWindow = new PopupWindow(contentView, 700,
                 WindowManager.LayoutParams.WRAP_CONTENT, true);
-
-//        TextView repeatTimeOnce = (TextView)contentView.findViewById(R.id.repeat_time_only_once);
-//        TextView repeatTimeEveryday = (TextView)contentView.findViewById(R.id.repeat_time_everyday);
-//        TextView repeatTimeMonToFri = (TextView)contentView.findViewById(R.id.repeat_time_Mon_to_Fri);
-//
-//        repeatTimeOnce.setOnClickListener(this);
-//        repeatTimeEveryday.setOnClickListener(this);
-//        repeatTimeMonToFri.setOnClickListener(this);
-
 
         RecyclerView recyclerView = (RecyclerView)contentView.findViewById(R.id.time_repeat_recycle_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -109,7 +106,7 @@ public class AlarmSetActivity extends AppCompatActivity implements View.OnClickL
         if(!TimeRepeatListInitFlag){
             initTimeRepeatName();
         }
-        TimeRepeatAdapter adapter = new TimeRepeatAdapter(list);
+        TimeRepeatAndRingAdapter adapter = new TimeRepeatAndRingAdapter(repeatTimeNameList);
         recyclerView.setAdapter(adapter);
 
         recyclerView.addItemDecoration(new com.example.youmiclock.DividerItemDecoration(this,
@@ -124,23 +121,58 @@ public class AlarmSetActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private void showRingPopupWindow(){
+        View contentView = LayoutInflater.from(AlarmSetActivity.this).inflate(
+                R.layout.popupwindow_time_repeat_and_ring, null);
+        PopupWindow popupWindow = new PopupWindow(contentView, 700,
+                WindowManager.LayoutParams.WRAP_CONTENT, false);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+
+        RecyclerView recyclerView = (RecyclerView)contentView.findViewById(
+                R.id.time_repeat_recycle_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        if(!ringInitFlat){
+            initRing();
+        }
+        TimeRepeatAndRingAdapter adapter = new TimeRepeatAndRingAdapter(ringList);
+        recyclerView.setAdapter(adapter);
+
+        View rootView = LayoutInflater.from(AlarmSetActivity.this).inflate(
+                R.layout.activity_alarm_set, null);
+        popupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
+    }
+
     private void initTimeRepeatName(){
 
         TimeRepeatListInitFlag = true;
 
         String name1 = "只响一次";
-        list.add(name1);
+        repeatTimeNameList.add(name1);
 
         String name2 = "每天";
-        list.add(name2);
+        repeatTimeNameList.add(name2);
 
         String name3 = "周一至周五";
-        list.add(name3);
+        repeatTimeNameList.add(name3);
 
         String name4 = "法定工作日";
-        list.add(name4);
+        repeatTimeNameList.add(name4);
 
         String name5 = "自定义";
-        list.add(name5);
+        repeatTimeNameList.add(name5);
+    }
+
+    private void initRing(){
+
+        ringInitFlat = true;
+
+        String name1 = "铃声";
+        ringList.add(name1);
+
+        String name2 = "震动";
+        ringList.add(name2);
     }
 }
